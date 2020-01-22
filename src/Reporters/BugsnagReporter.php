@@ -1,6 +1,6 @@
 <?php
 
-namespace Optimus\Heimdal\Reporters;
+namespace Thunken\Heimdal\Reporters;
 
 use Exception;
 use Bugsnag\Client;

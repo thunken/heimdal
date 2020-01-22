@@ -1,11 +1,11 @@
 <?php
 
-namespace Optimus\Heimdal\Reporters;
+namespace Thunken\Heimdal\Reporters;
 
 use Exception;
 use InvalidArgumentException;
 use Raven_Client;
-use Optimus\Heimdal\Reporters\ReporterInterface;
+use Thunken\Heimdal\Reporters\ReporterInterface;
 
 class SentryReporter implements ReporterInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Optimus\Heimdal\Formatters;
+namespace Thunken\Heimdal\Formatters;
 
 use Exception;
 use Illuminate\Http\JsonResponse;

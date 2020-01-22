@@ -4,7 +4,7 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 [![Build Status](https://img.shields.io/travis/esbenp/heimdal/master.svg?style=flat-square)](https://travis-ci.org/esbenp/heimdal)
 [![Coverage Status](https://img.shields.io/coveralls/esbenp/heimdal.svg?style=flat-square)](https://coveralls.io/github/esbenp/heimdal)
-[![Total Downloads](https://img.shields.io/packagist/dt/optimus/heimdal.svg?style=flat-square)](https://packagist.org/packages/optimus/heimdal)
+[![Total Downloads](https://img.shields.io/packagist/dt/thunken/heimdal.svg?style=flat-square)](https://packagist.org/packages/thunken/heimdal)
 
 ## Introduction
 
@@ -19,20 +19,20 @@ have [guidelines for how errors should be formatted](http://jsonapi.org/format/#
 ## Installation
 
 ```bash
-composer require optimus/heimdal ~1.0
+composer require thunken/heimdal ^2.0
 ```
 
 Add the service provider to `config/app.php`
 
 ```
 // other providers...
-Optimus\Heimdal\Provider\LaravelServiceProvider::class,
+Thunken\Heimdal\Provider\LaravelServiceProvider::class,
 ```
 
 Publish the configuration.
 
 ```
-php artisan vendor:publish --provider="Optimus\Heimdal\Provider\LaravelServiceProvider"
+php artisan vendor:publish --provider="Thunken\Heimdal\Provider\LaravelServiceProvider"
 ```
 
 Add the exception handler to `bootstrap/app.php`
@@ -40,7 +40,7 @@ Add the exception handler to `bootstrap/app.php`
 ```
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
-    Optimus\Heimdal\ExceptionHandler::class
+    Thunken\Heimdal\ExceptionHandler::class
 );
 ```
 
@@ -75,11 +75,11 @@ Heimdal has two things that should be configured: formatters and reporters.
 
 You should determine where your exceptions should be reported to. Heimdal still calls the base report function in Laravel, so your
 exceptions will still be logged as normal. However, adding external reporting is easy. Heimdal comes with Sentry integration out of the box.
-To send exceptions to Sentry simply add this entry to the `reporters` section in `config/optimus.heimdal.php`
+To send exceptions to Sentry simply add this entry to the `reporters` section in `config/heimdal.php`
 
 ```php
 'sentry' => [
-    'class'  => \Optimus\Heimdal\Reporters\SentryReporter::class,
+    'class'  => \Thunken\Heimdal\Reporters\SentryReporter::class,
     'config' => [
         'dsn' => '',
         // For extra options see https://docs.sentry.io/clients/php/config/
@@ -96,7 +96,7 @@ Adding a custom reporter, for instance Bugsnag, is as simple as writing a small 
 
 namespace My\Namespace\Exceptions\Reporters;
 
-use Optimus\Heimdal\Reporters\ReporterInterface;
+use Thunken\Heimdal\Reporters\ReporterInterface;
 
 class BugsnagReporter implements ReporterInterface
 {
@@ -112,7 +112,7 @@ class BugsnagReporter implements ReporterInterface
 }
 ```
 
-And then add it to `config/optimus.heimdal.php`
+And then add it to `config/heimdal.php`
 
 ```php
 'bugsnag' => [
@@ -125,7 +125,7 @@ And then add it to `config/optimus.heimdal.php`
 
 ### Formatters
 
-Heimdal already comes with sensible formatters out of the box. In `config/optimus.heimdal.php` is a section where
+Heimdal already comes with sensible formatters out of the box. In `config/heimdal.php` is a section where
 the formatter priority is defined.
 
 ```php
@@ -150,7 +150,7 @@ namespace My\Namespace\Exceptions\Formatters;
 
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Optimus\Heimdal\Formatters\BaseFormatter;
+use Thunken\Heimdal\Formatters\BaseFormatter;
 
 class NotFoundHttpExceptionFormatter extends BaseFormatter
 {
@@ -180,7 +180,7 @@ class NotFoundHttpExceptionFormatter extends BaseFormatter
 ```
 
 Notice how easily we used `$reporterResponses` to attach the ID of the Sentry log to the JSON response.
-Now we simply add it to `config/optimus.heimdal.php`
+Now we simply add it to `config/heimdal.php`
 
 ```php
 'formatters' => [
@@ -197,12 +197,12 @@ Now all `NotFoundHttpException`s will be formatted using our custom formatter.
 
 ### [Sentry](https://getsentry.com)
 
-To send Exceptions to Sentry add the following reporter configuration in `config/optimus.heimdal.php`.
+To send Exceptions to Sentry add the following reporter configuration in `config/heimdal.php`.
 
 ```
 'reporters' => [
     'sentry' => [
-        'class'  => \Optimus\Heimdal\Reporters\SentryReporter::class,
+        'class'  => \Thunken\Heimdal\Reporters\SentryReporter::class,
         'config' => [
             'dsn' => '',
             // For extra options see https://docs.sentry.io/clients/php/config/
@@ -221,7 +221,7 @@ For this you can add the `add_context` key to the `config` array. Below is an ex
 ```
 'reporters' => [
     'sentry' => [
-        'class'  => \Optimus\Heimdal\Reporters\SentryReporter::class,
+        'class'  => \Thunken\Heimdal\Reporters\SentryReporter::class,
         'config' => [
             'dsn' => env('SENTRY_DSN'),
             // For extra options see https://docs.sentry.io/clients/php/config/
@@ -267,12 +267,12 @@ For this you can add the `add_context` key to the `config` array. Below is an ex
 
 [Install Bugsnag using the Laravel installation guide](https://docs.bugsnag.com/platforms/php/laravel/)
 
-To send Exceptions to Bugsnag add the following reporter configuration in `config/optimus.heimdal.php`.
+To send Exceptions to Bugsnag add the following reporter configuration in `config/heimdal.php`.
 
 ```
 'reporters' => [
     'bugsnag' => [
-        'class'  => \Optimus\Heimdal\Reporters\BugsnagReporter::class,
+        'class'  => \Thunken\Heimdal\Reporters\BugsnagReporter::class,
         'config' => []
     ]
 ]
@@ -280,12 +280,12 @@ To send Exceptions to Bugsnag add the following reporter configuration in `confi
 
 ### [Rollbar](https://rollbar.com)
 
-To send Exceptions to Rollbar add the following reporter configuration in `config/optimus.heimdal.php`.
+To send Exceptions to Rollbar add the following reporter configuration in `config/heimdal.php`.
 
 ```
 'reporters' => [
 'rollbar' => [
-        'class'  => \Optimus\Heimdal\Reporters\RollbarReporter::class,
+        'class'  => \Thunken\Heimdal\Reporters\RollbarReporter::class,
         'config' => [
             'access_token' => '',
             'environment' => 'production'

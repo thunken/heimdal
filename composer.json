@@ -1,8 +1,8 @@
 {
-    "name": "optimus/heimdal",
+    "name": "thunken/heimdal",
     "autoload": {
         "psr-4": {
-            "Optimus\\Heimdal\\": "src/"
+            "Thunken\\Heimdal\\": "src/"
         }
     },
     "autoload-dev": {

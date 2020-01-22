@@ -1,11 +1,11 @@
 <?php
 
-namespace Optimus\Heimdal\Provider;
+namespace Thunken\Heimdal\Provider;
 
 use Illuminate\Support\ServiceProvider as BaseProvider;
-use Optimus\Heimdal\Reporters\BugsnagReporter;
-use Optimus\Heimdal\Reporters\RollbarReporter;
-use Optimus\Heimdal\Reporters\SentryReporter;
+use Thunken\Heimdal\Reporters\BugsnagReporter;
+use Thunken\Heimdal\Reporters\RollbarReporter;
+use Thunken\Heimdal\Reporters\SentryReporter;
 
 class LaravelServiceProvider extends BaseProvider {
 
@@ -19,14 +19,14 @@ class LaravelServiceProvider extends BaseProvider {
     private function registerAssets()
     {
         $this->publishes([
-            __DIR__.'/../config/optimus.heimdal.php' => config_path('optimus.heimdal.php')
+            __DIR__.'/../config/heimdal.php' => config_path('heimdal.php')
         ]);
     }
 
     private function loadConfig()
     {
-        if ($this->app['config']->get('optimus.heimdal') === null) {
-            $this->app['config']->set('optimus.heimdal', require __DIR__.'/../config/optimus.heimdal.php');
+        if ($this->app['config']->get('heimdal') === null) {
+            $this->app['config']->set('heimdal', require __DIR__.'/../config/heimdal.php');
         }
     }
 

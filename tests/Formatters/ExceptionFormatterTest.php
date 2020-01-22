@@ -1,7 +1,7 @@
 <?php
 
-use Optimus\Heimdal\Formatters\ExceptionFormatter;
-use Optimus\Heimdal\ResponseFactory;
+use Thunken\Heimdal\Formatters\ExceptionFormatter;
+use Thunken\Heimdal\ResponseFactory;
 use Orchestra\Testbench\TestCase;
 
 class ExceptionFormatterTest extends TestCase
